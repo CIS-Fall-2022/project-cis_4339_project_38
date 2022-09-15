@@ -12,7 +12,7 @@ let org_data = new Schema({
 	},
 	org_description: {
 		type: String,
-	}
+	},
 	org_contact: {
 		phoneNumbers: {
         	type: Array,
@@ -92,7 +92,7 @@ let client_data = new Schema({
         zip: {
             type: String,
         }
-    }
+    },
 	emergency_contact: {
 		contactname: {
 			type: String,
@@ -103,7 +103,7 @@ let client_data = new Schema({
 		relation: {
 			type: String,
 		}
-	}
+	},
 	healthinfo: {
 		height: {
 			type: String,
@@ -113,13 +113,13 @@ let client_data = new Schema({
 		},
 		blood_type: {
 			type: String,
-		}
+		},
 		pre_conditions: {
 			type: String,
-		}
+		},
 		current_meds: {
 			type: String,
-		}
+		},
 		allergy: {
 			type: String,
 		}
@@ -170,7 +170,7 @@ let event_data = new Schema({
     },
     attendees: [{
         type: String,
-    }]
+    }],
 	organization_info: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'organization'

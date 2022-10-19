@@ -2,11 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan"); //better debugging
 const cors = require("cors");
+const bodyParser = require("body-parser")
 //allow using a .env file
 require("dotenv").config();   
 
 //creates a new instance of express application
 const app = express();
+
 
 // add cors header to the server
 app.use(cors({
@@ -25,18 +27,22 @@ mongoose
 
 //declare port number for the api
 const PORT = process.env.PORT || 3000;
-//New Comment
+
 //setup
 app.use(express.json());
 app.use(morgan("dev"));
 
+
+
 //import routes
 const primaryDataRoute  = require('./routes/primaryData');
 const eventsDataRoute  = require('./routes/eventsData');
+const orgDataRoute = require('./routes/orgData');
 
 //setup middle ware for routes
-app.use('/primaryData', primaryDataRoute);
-app.use('/eventData', eventsDataRoute)
+app.use('/primary', primaryDataRoute);
+app.use('/event', eventsDataRoute);
+app.use('/org', orgDataRoute);
 
 app.listen(PORT, () => {
   console.log("Server started listening on port : ", PORT);

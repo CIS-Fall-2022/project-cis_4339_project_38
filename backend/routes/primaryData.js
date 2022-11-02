@@ -98,7 +98,7 @@ router.put("/:id", (req, res, next) => {
 
 router.delete('/primary/:id', (req, res, next) => {
     //mongoose will use studentID of document
-    primarydata.findOneAndRemove({ eventID: req.params.id}, (error, data) => {
+    primarydata.findOneAndRemove({ primaryID: req.params.id}, (error, data) => {
         if (error) {
           return next(error);
         } else {

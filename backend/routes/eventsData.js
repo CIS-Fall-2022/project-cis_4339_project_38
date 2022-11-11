@@ -151,7 +151,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
     );
     
 });
-
+//DELETE Delete Event
 router.delete('/event/:id', (req, res, next) => {
     //mongoose will use studentID of document
     eventdata.findOneAndRemove({ eventID: req.params.id}, (error, data) => {
@@ -164,5 +164,20 @@ router.delete('/event/:id', (req, res, next) => {
 //          res.send('Event has been deleted');
         }
       });
+});
+
+//DELETE Delete Attendee from Event
+router.delete('/event/:id', (req, res, next) => {
+    eventdata.findOneAndRemove({ attendee: req.params.attendees}, (error,data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            });
+                
+        }    
+
+    });
 });
 module.exports = router;

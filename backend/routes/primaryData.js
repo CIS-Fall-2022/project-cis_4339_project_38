@@ -1,12 +1,30 @@
 const express = require("express"); 
 const router = express.Router(); 
+const mongoose = require('mongoose');
 
 //importing data model schemas
-let { primarydata } = require("../models/models"); 
-let { eventdata } = require("../models/models"); 
+let  primarydata  = require("../models/primary.js"); 
+let { eventdata } = require("../models/event.js"); 
+let { orgdata } = require("../models/org.js")
+
+//POST
+router.post("/createprimary", (req, res, next) => { 
+    primarydata.create( req.body,(error, data) => { 
+        if (error) {
+            return next(error);
+        } else {
+            res.send('Client is created!')
+            console.log('We have a new client: ', (data)) 
+        }
+    }
+);
+primarydata.createdAt;
+primarydata.updatedAt;
+primarydata.createdAt instanceof Date;
+});
 
 //GET all entries
-router.get("/", (req, res, next) => { 
+router.get("/allprimaries", (req, res, next) => { 
     primarydata.find( 
         (error, data) => {
             if (error) {
@@ -60,22 +78,7 @@ router.get("/events/:id", (req, res, next) => {
     
 });
 
-//POST
-router.post("/", (req, res, next) => { 
-    primarydata.create( 
-        req.body,
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data); 
-            }
-        }
-    );
-    primarydata.createdAt;
-    primarydata.updatedAt;
-    primarydata.createdAt instanceof Date;
-});
+
 
 //PUT update (make sure req body doesn't have the id)
 router.put("/:id", (req, res, next) => { 
@@ -86,10 +89,25 @@ router.put("/:id", (req, res, next) => {
             if (error) {
                 return next(error);
             } else {
-                res.json(data);
+                res.send('Client is updated!');
+                console.log('We have an Client update: ', (data))
             }
         }
     );
+});
+
+router.delete('/primary/:id', (req, res, next) => {
+    //mongoose will use studentID of document
+    primarydata.findOneAndRemove({ primaryID: req.params.id}, (error, data) => {
+        if (error) {
+          return next(error);
+        } else {
+           res.status(200).json({
+             msg: data
+           });
+          res.send('This client has been deleted!');
+        }
+      });
 });
 
 module.exports = router;

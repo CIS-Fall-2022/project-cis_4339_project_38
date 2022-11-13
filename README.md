@@ -1,23 +1,18 @@
-# Backend
+# Data Platform Project Setup
 
-This implementation is for NodeJS based on [Express](https://expressjs.com/) and [MongoDB](https://www.mongodb.com/) and uses [mongoose](https://mongoosejs.com/) as the ODM.
+Requirements:
 
-## Project setup
-```
-npm install
-```
+This project uses NodeJS and MongoDB.
 
-### Before startup 
-Setup a .env file with the following variables, e.g.:
+## Backend Node Application
+```
+cd backend
+```
+Follow instructions in backend README
 
+## Frontend Vue 3 Application
 ```
-MONGO_URL = mongodb+srv://<username>:<password>@cluster0.abcdc.mongodb.net/dbname
+cd frontend
 ```
-
-### Compiles and hot-reloads for development
-```
-npm start
-
-This is the link for API documentation: https://documenter.getpostman.com/view/23655211/2s83zfS5pS
-```
+Follow instructions in frontend README
 

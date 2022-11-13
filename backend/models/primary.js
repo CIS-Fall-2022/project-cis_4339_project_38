@@ -79,6 +79,3 @@ let primaryDataSchema = new Schema({
     collection: 'primaryData',
     timestamps: true
 });
-
-
-module.exports = mongoose.model('primaryData', primaryDataSchema);

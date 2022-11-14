@@ -189,6 +189,17 @@
             </label>
           </div>
         </div>
+        <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Organization Name</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                placeholder
+                v-model="event.orgName"
+              />
+              </label>
+              </div>
 
         <div class="flex justify-between mt-10 mr-20">
           <button class="bg-red-700 text-white rounded" type="submit">Add New Event</button>

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { json } = require("body-parser");
 
-const orgID = process.env.ORG_ID;
+//const orgID = process.env.ORG_ID;
 
 //importing data model schemas
 let  eventdata  = require("../models/event.js"); 
@@ -146,7 +146,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
                 }
                 else if (data.length == 1){
                     res.send("Attendee has already been added. Please add a new person!")
-                    Promise.reject("Whoops! I think someone is trying to register for the event!").then(null, function(err) { console.log(err); });
+                    Promise.reject("I think a new person is trying to RSVP for the event!").then(null, function(err) { console.log(err); });
             }  
             }
         }

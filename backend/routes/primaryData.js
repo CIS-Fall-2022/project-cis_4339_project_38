@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router(); 
 const mongoose = require('mongoose');
 
-//const orgID = process.env.ORG_ID;
+const orgID = process.env.ORG_ID;
 //importing data model schemas
 let primarydata  = require("../models/primary.js"); 
 let { eventdata } = require("../models/event.js"); 
-let { orgdata } = require("../models/org.js")
+let { orgdata } = require("../models/org.js");
 
 //POST
 router.post("/createprimary", (req, res, next) => { 

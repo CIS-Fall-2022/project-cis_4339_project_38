@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { json } = require("body-parser");
 
-//const orgID = process.env.ORG_ID;
+const orgID = process.env.ORG_ID;
 
 //importing data model schemas
 let  eventdata  = require("../models/event.js"); 
@@ -87,22 +87,24 @@ router.get("/client/:id", (req, res, next) => {
 });
 
 //GET the count of attendees of an event
-router.get("/total/:eventName", (req, res, next) => { 
+router.get("/eventAttendees", (req, res, next) => { 
+    var checkDate = new Date() 
+    
     eventdata.aggregate([
-        { $match : { eventName : req.params.eventName } },
-        { $unwind : "$attendees"  },
-        { $project : {eventName : 1, address: 1, orgName : 1, descsription : 1}},
-        { $count : "total" }
- 
-
-    ], (error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-        res.json(data);
-        console.log(data)
-        }
-});
+            {$match: {date: {
+                $gt : new Date(checkDate.setMonth(checkDate.getMonth() - 2)),
+                $lt : new Date()
+            }} },
+            {$group: {_id: "$eventName", total: { $sum: { $size:"$attendees"}}}}
+        ], 
+            (error, data) => {
+                if (error) {
+                    return next(error);
+                } else {
+                    res.json(data);
+                }
+            }
+        )
 });
 
 

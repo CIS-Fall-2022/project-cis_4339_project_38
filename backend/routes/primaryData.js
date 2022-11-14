@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 //importing data model schemas
-let  primarydata  = require("../models/primary.js"); 
+let primarydata  = require("../models/primary.js"); 
 let { eventdata } = require("../models/event.js"); 
 let { orgdata } = require("../models/org.js")
 

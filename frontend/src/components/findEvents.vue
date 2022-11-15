@@ -98,7 +98,7 @@ export default {
     };
   },
   mounted() {
-    let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/`;
+    let apiURL = "http://localhost:3000/event/search";
     this.queryData = [];
     axios.get(apiURL).then((resp) => {
       this.queryData = resp.data;
@@ -113,8 +113,8 @@ export default {
       let apiURL = "";
       if (this.searchBy === "Event Name") {
         apiURL =
-          import.meta.env.VITE_ROOT_API +
-          `/eventdata/search/?eventName=${this.eventName}&searchBy=name`;
+        "http://localhost:3000/event/search" +
+          `?eventName=${this.eventName}&searchBy=name`;
       } else if (this.searchBy === "Event Date") {
         apiURL =
           import.meta.env.VITE_ROOT_API +

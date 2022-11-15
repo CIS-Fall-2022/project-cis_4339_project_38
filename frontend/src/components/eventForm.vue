@@ -123,7 +123,6 @@
             </div>
           </div>
         </div>
-
         <!-- grid container -->
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <h2 class="text-2xl font-bold">Address</h2>
@@ -229,7 +228,7 @@ export default {
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
         this.event.services = this.checkedServices;
-        let apiURL = import.meta.env.VITE_ROOT_API + `/eventData`;
+        let apiURL = "http://localhost:3000/event/createevent";
         axios
           .post(apiURL, this.event)
           .then(() => {

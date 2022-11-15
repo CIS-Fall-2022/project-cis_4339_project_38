@@ -10,7 +10,6 @@ let eventDataSchema = new Schema({
     },
     services: {
         type: Array,
-        require: true
     },
     date: {
         type: Date,
@@ -41,7 +40,6 @@ let eventDataSchema = new Schema({
     },
     orgName: {
         type: String,
-        require: true
     }
 }, {
     collection: 'eventData'

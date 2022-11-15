@@ -110,7 +110,7 @@ export default {
     };
   },
   mounted() {
-    let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/`;
+    let apiURL = "http://localhost:3000/primary/search";
     axios.get(apiURL).then((resp) => {
       this.queryData = resp.data;
     });
@@ -121,8 +121,8 @@ export default {
       let apiURL = "";
       if (this.searchBy === "Client Name") {
         apiURL =
-          import.meta.env.VITE_ROOT_API +
-          `/primarydata/search/?firstName=${this.firstName}&lastName=${this.lastName}&searchBy=name`;
+        "http://localhost:3000/primary/search" +
+          `?firstName=${this.firstName}&lastName=${this.lastName}&searchBy=name`;
       } else if (this.searchBy === "Client Number") {
         apiURL =
           import.meta.env.VITE_ROOT_API +

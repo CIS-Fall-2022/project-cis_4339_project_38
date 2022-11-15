@@ -189,8 +189,6 @@
             </label>
           </div>
         </div>
-
-
         <div class="flex justify-between mt-10 mr-20">
           <button class="bg-red-700 text-white rounded" type="submit">Add New Event</button>
         </div>
@@ -236,7 +234,7 @@ export default {
           .post(apiURL, this.event)
           .then(() => {
             alert("Event has been added.");
-            this.$router.push("/findEvents");
+            this.$router.push("/createevent");
             this.client = {
               eventName: "",
               services: [],

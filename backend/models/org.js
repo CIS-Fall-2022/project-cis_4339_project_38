@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let orgDataSchema = new Schema({
-    _id: { type: String, 
-           unique : true 
-        },
+    _id: { type: String, default: uuid.v1 },
     orgName: {
         type: String
     },

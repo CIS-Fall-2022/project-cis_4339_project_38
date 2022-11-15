@@ -5,7 +5,7 @@
     </div>
     <div class="px-10 py-20">
       <!-- @submit.prevent stops the submit event from reloading the page-->
-      <form @submit.prevent="handleSubmitForm">
+      <form @submit.prevent="handleSubmitForm" method="POST" action="/createevent">
         <!-- grid container -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <h2 class="text-2xl font-bold">Event Details</h2>
@@ -235,7 +235,7 @@ export default {
           .then(() => {
             alert("Event has been added.");
             this.$router.push("/createevent");
-            this.client = {
+            this.event = {
               eventName: "",
               services: [],
               date: "",

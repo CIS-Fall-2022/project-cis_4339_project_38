@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { json } = require("body-parser");
 
-const orgID = process.env.ORG_ID;
+//const orgID = process.env.ORG_ID;
 
 //importing data model schemas
 let  eventdata  = require("../models/event.js"); 

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let primaryDataSchema = new Schema({
-    _id: { type: String, unique: true },
+    _id: { type: String, default: uuid.v1 },
     firstName: {
         type: String,
         require: true

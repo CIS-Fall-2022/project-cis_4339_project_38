@@ -124,9 +124,9 @@ export default {
         "http://localhost:3000/primary/search" +
           `?firstName=${this.firstName}&lastName=${this.lastName}&searchBy=name`;
       } else if (this.searchBy === "Client Number") {
-        apiURL =
-          import.meta.env.VITE_ROOT_API +
-          `/primarydata/search/?phoneNumbers.primaryPhone=${this.phoneNumber}&searchBy=number`;
+        apiURL = "http://localhost:3000/primary/search"
+           +
+          `?phoneNumbers.primaryPhone=${this.phoneNumber}&searchBy=number`;
       }
       axios.get(apiURL).then((resp) => {
         this.queryData = resp.data;

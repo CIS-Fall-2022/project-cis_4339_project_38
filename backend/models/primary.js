@@ -19,7 +19,7 @@ let primaryDataSchema = new Schema({
         type: String
     },
     phoneNumbers: {
-        type: [String],
+        type: Number,
         required: true
     },
     address: {
@@ -61,15 +61,15 @@ let primaryDataSchema = new Schema({
         blood_type: {
             type: String
         },
-        pre_conditions: [{
+        pre_conditions: {
             type: String
-        }],
-        current_meds: [{
+        },
+        current_meds: {
             type: String
-        }],
-        allergy: [{
+        },
+        allergy: {
             type: String
-        }]
+        }
     },
     orgName: {
         type: String,

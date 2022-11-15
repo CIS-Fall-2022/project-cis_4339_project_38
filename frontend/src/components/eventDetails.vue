@@ -276,7 +276,7 @@ export default {
   beforeMount() {
     axios
       .get(
-        import.meta.env.VITE_ROOT_API + `/eventdata/id/${this.$route.params.id}`
+        'http://localhost:3000/' + `/event/id/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data[0];

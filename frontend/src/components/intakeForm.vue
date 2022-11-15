@@ -11,7 +11,7 @@ export default {
   },
   data() {
     return {
-      primary: {
+      client: {
         firstName: "",
         middleName: "",
         lastName: "",
@@ -29,19 +29,6 @@ export default {
           county: "",
           zip: "",
         },
-        emergency_contact: {
-            contactName: "",
-            contactNum:"",
-            relation:""
-        },
-        healthinfo: {
-            height: "",
-            weight:"",
-            blood_type:"",
-            pre_conditions:"",
-            current_meds:"",
-            allergy:""
-        }
       },
     };
   },
@@ -51,18 +38,23 @@ export default {
       const isFormCorrect = await this.v$.$validate();
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
-        let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData`;
+        let apiURL = "http://localhost:3000/primary/createprimary";
         axios
-          .post(apiURL, this.primary)
+          .post(apiURL, this.client)
           .then(() => {
             alert("Client has been succesfully added.");
-            this.$router.push("/createprimary");
-            this.primary = {
+            this.$router.push("/findclient");
+            this.client = {
               firstName: "",
               middleName: "",
               lastName: "",
               email: "",
-              phoneNumbers: "",
+              phoneNumbers: [
+                {
+                  primaryPhone: "",
+                  seondaryPhone: "",
+                },
+              ],
               address: {
                 line1: "",
                 line2: "",
@@ -72,16 +64,16 @@ export default {
               },
               emergency_contact: {
                 contactName: "",
-                contactNum:"",
-                relation:""
+                contactNum: "",
+                relation: ""
               },
               healthinfo: {
                 height: "",
-                weight:"",
-                blood_type:"",
-                pre_conditions:"",
+                weight: "",
+                blood_type: "",
+                pre_conditions: "",
                 current_meds:"",
-                allergy:""
+                allergy: ""
               }
             };
           })
@@ -94,16 +86,18 @@ export default {
   // sets validations for the various data properties
   validations() {
     return {
-      primary: {
+      client: {
         firstName: { required, alpha },
         lastName: { required, alpha },
         email: { email },
         address: {
-          line1: {required},
           city: { required },
         },
-        phoneNumbers: { required, numeric }
-      
+        phoneNumbers: [
+          {
+            primaryPhone: { required, numeric },
+          },
+        ],
       },
     };
   },
@@ -126,12 +120,12 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.firstName"
+                v-model="client.firstName"
               />
-              <span class="text-black" v-if="v$.primary.firstName.$error">
+              <span class="text-black" v-if="v$.client.firstName.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.primary.firstName.$errors"
+                  v-for="error of v$.client.firstName.$errors"
                   :key="error.$uid"
                 >{{ error.$message }}!</p>
               </span>
@@ -146,7 +140,7 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
-                v-model="primary.middleName"
+                v-model="client.middleName"
               />
             </label>
           </div>
@@ -160,12 +154,12 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
-                v-model="primary.lastName"
+                v-model="client.lastName"
               />
-              <span class="text-black" v-if="v$.primary.lastName.$error">
+              <span class="text-black" v-if="v$.client.lastName.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.primary.lastName.$errors"
+                  v-for="error of v$.client.lastName.$errors"
                   :key="error.$uid"
                 >{{ error.$message }}!</p>
               </span>
@@ -177,17 +171,16 @@ export default {
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Email</span>
-              <span style="color:#ff0000">*</span>
               <input
                 type="email"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                v-model="primary.email"
+                v-model="client.email"
               />
-              <span class="text-black" v-if="v$.primary.email.$error">
+              <span class="text-black" v-if="v$.client.email.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.primary.email.$errors"
+                  v-for="error of v$.client.email.$errors"
                   :key="error.$uid"
                 >{{ error.$message }}!</p>
               </span>
@@ -202,15 +195,27 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
-                v-model="primary.phoneNumbers[0]"
+                v-model="client.phoneNumbers[0].primaryPhone"
               />
-              <span class="text-black" v-if="v$.primary.phoneNumbers[0].$error">
+              <span class="text-black" v-if="v$.client.phoneNumbers[0].primaryPhone.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.primary.phoneNumbers[0].$errors"
+                  v-for="error of v$.client.phoneNumbers[0].primaryPhone.$errors"
                   :key="error.$uid"
                 >{{ error.$message }}!</p>
               </span>
+            </label>
+          </div>
+          <!-- form field -->
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Alternative Phone Number</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+                v-model="client.phoneNumbers[0].secondaryPhone"
+              />
             </label>
           </div>
         </div>
@@ -222,19 +227,11 @@ export default {
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Address Line 1</span>
-              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.address.line1"
+                v-model="client.address.line1"
               />
-              <span class="text-black" v-if="v$.primary.address.line1.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.primary.address.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
           <!-- form field -->
@@ -244,7 +241,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.address.line2"
+                v-model="client.address.line2"
               />
             </label>
           </div>
@@ -252,15 +249,16 @@ export default {
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">City</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.address.city"
+                v-model="client.address.city"
               />
-              <span class="text-black" v-if="v$.primary.address.city.$error">
+              <span class="text-black" v-if="v$.client.address.city.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.primary.address.$errors"
+                  v-for="error of v$.client.address.$errors"
                   :key="error.$uid"
                 >{{ error.$message }}!</p>
               </span>
@@ -274,7 +272,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.address.county"
+                v-model="client.address.county"
               />
             </label>
           </div>
@@ -285,121 +283,116 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.address.zip"
+                v-model="client.address.zip"
               />
             </label>
           </div>
           <div></div>
-        </div>
-        <!-- grid container -->
-        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
-          <h2 class="text-2xl font-bold">Emergency Contact</h2>
-          <!-- form field -->
+
+          <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+          <h2 class="text-2xl font-bold">Emergency Contact</h2></div>
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Contact Name</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.emergency_contact.contactName"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Contact Number</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.emergency_contact.contactNum"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Relation</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.emergency_contact.relation"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <div></div>
-          <!-- grid container -->
-        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
-          <h2 class="text-2xl font-bold">Health Information</h2>
-          <!-- form field -->
+          <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+          <h2 class="text-2xl font-bold">Health Information</h2></div>
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Height</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.healthinfo.height"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Weight</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.healthinfo.weight"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Blood Type</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.healthinfo.blood_type"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <div></div>
-          <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
-              <span class="text-gray-700">Pre-existing Conditions</span>
+              <span class="text-gray-700">Relation</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.healthinfo.pre_conditions"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
-              <span class="text-gray-700">Current Medication(s)</span>
+              <span class="text-gray-700">Pre-Conditions</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.healthinfo.current_meds"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-           <!-- form field -->
-           <div class="flex flex-col">
+          <div class="flex flex-col">
             <label class="block">
-              <span class="text-gray-700">Allergies</span>
+              <span class="text-gray-700">Current Medication</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="primary.healthinfo.allergy"
+                v-model="client.address.line1"
               />
             </label>
           </div>
-          <div></div>
-        </div>
+                    <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Relation</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.address.line1"
+              />
+            </label>
+          </div>
           <!-- submit button -->
           <div class="flex justify-between mt-10 mr-20">
             <button class="bg-red-700 text-white rounded" type="submit">Add Client</button>

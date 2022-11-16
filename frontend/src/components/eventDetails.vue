@@ -276,7 +276,7 @@ export default {
   beforeMount() {
     axios
       .get(
-        'http://localhost:3000/' + `/event/id/${this.$route.params.id}`
+        'http://localhost:3000/' + `event/id/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data[0];
@@ -290,8 +290,8 @@ export default {
         for (let i = 0; i < this.attendeeIDs.length; i++) {
           axios
             .get(
-              import.meta.env.VITE_ROOT_API +
-                `/primarydata/id/${this.attendeeIDs[i]}`
+              'http://localhost:3000/' +
+                `primary/id${this.attendeeIDs[i]}`
             )
             .then((resp) => {
               let data = resp.data[0];
@@ -312,7 +312,7 @@ export default {
     },
     handleEventUpdate() {
       this.event.services = this.checkedServices;
-      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
+      let apiURL = 'http://localhost:3000' + `/event/${this.id}`;
       axios.put(apiURL, this.event).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {

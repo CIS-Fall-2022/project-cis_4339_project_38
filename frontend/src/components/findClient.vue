@@ -124,8 +124,8 @@ export default {
         "http://localhost:3000/primary/search" +
           `?firstName=${this.firstName}&lastName=${this.lastName}&searchBy=name`;
       } else if (this.searchBy === "Client Number") {
-        apiURL = "http://localhost:3000/primary/search"
-           +
+        apiURL = 
+        "http://localhost:3000/primary/search" +
           `?phoneNumbers.primaryPhone=${this.phoneNumber}&searchBy=number`;
       }
       axios.get(apiURL).then((resp) => {

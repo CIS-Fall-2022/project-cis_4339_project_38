@@ -1,108 +1,3 @@
-<script>
-import useVuelidate from "@vuelidate/core";
-import { required, email, alpha, numeric } from "@vuelidate/validators";
-import axios from "axios";
-export default {
-  setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) };
-  },
-  mounted() {
-    window.scrollTo(0, 0);
-  },
-  data() {
-    return {
-      client: {
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        email: "",
-        phoneNumbers: [
-          {
-            primaryPhone: "",
-            secondaryPhone: "",
-          },
-        ],
-        address: {
-          line1: "",
-          line2: "",
-          city: "",
-          county: "",
-          zip: "",
-        },
-      },
-    };
-  },
-  methods: {
-    async handleSubmitForm() {
-      // Checks to see if there are any errors in validation
-      const isFormCorrect = await this.v$.$validate();
-      // If no errors found. isFormCorrect = True then the form is submitted
-      if (isFormCorrect) {
-        let apiURL = "http://localhost:3000/primary/createprimary";
-        axios
-          .post(apiURL, this.client)
-          .then(() => {
-            alert("Client has been succesfully added.");
-            this.$router.push("/findclient");
-            this.client = {
-              firstName: "",
-              middleName: "",
-              lastName: "",
-              email: "",
-              phoneNumbers: [
-                {
-                  primaryPhone: "",
-                  seondaryPhone: "",
-                },
-              ],
-              address: {
-                line1: "",
-                line2: "",
-                city: "",
-                county: "",
-                zip: "",
-              },
-              emergency_contact: {
-                contactName: "",
-                contactNum: "",
-                relation: ""
-              },
-              healthinfo: {
-                height: "",
-                weight: "",
-                blood_type: "",
-                pre_conditions: "",
-                current_meds:"",
-                allergy: ""
-              }
-            };
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    },
-  },
-  // sets validations for the various data properties
-  validations() {
-    return {
-      client: {
-        firstName: { required, alpha },
-        lastName: { required, alpha },
-        email: { email },
-        address: {
-          city: { required },
-        },
-        phoneNumbers: [
-          {
-            primaryPhone: { required, numeric },
-          },
-        ],
-      },
-    };
-  },
-};
-</script>
 <template>
   <main>
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Client Intake Form</h1>
@@ -297,7 +192,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.emergency_contact.contactName"
               />
             </label>
           </div>
@@ -307,7 +202,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.emergency_contact.contactNum"
               />
             </label>
           </div>
@@ -317,7 +212,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.emergency_contact.relation"
               />
             </label>
           </div>
@@ -329,7 +224,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.healthinfo.height"
               />
             </label>
           </div>
@@ -339,7 +234,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.healthinfo.weight"
               />
             </label>
           </div>
@@ -349,17 +244,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
-              />
-            </label>
-          </div>
-          <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Relation</span>
-              <input
-                type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.healthinfo.blood_type"
               />
             </label>
           </div>
@@ -369,7 +254,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.healthinfo.pre_conditions"
               />
             </label>
           </div>
@@ -379,17 +264,17 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.healthinfo.current_meds"
               />
             </label>
           </div>
                     <div class="flex flex-col">
             <label class="block">
-              <span class="text-gray-700">Relation</span>
+              <span class="text-gray-700">Allergies</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="client.address.line1"
+                v-model="client.healthinfo.allergy"
               />
             </label>
           </div>
@@ -402,3 +287,121 @@ export default {
     </div>
   </main>
 </template>
+<script>
+import useVuelidate from "@vuelidate/core";
+import { required, email, alpha, numeric } from "@vuelidate/validators";
+import axios from "axios";
+export default {
+  setup() {
+    return { v$: useVuelidate({ $autoDirty: true }) };
+  },
+  mounted() {
+    window.scrollTo(0, 0);
+  },
+  data() {
+    return {
+      client: {
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        email: "",
+        phoneNumbers: [
+          {
+            primaryPhone: "",
+            secondaryPhone: "",
+          },
+        ],
+        address: {
+          line1: "",
+          line2: "",
+          city: "",
+          county: "",
+          zip: "",
+        },
+        emergency_contact: {
+                contactName: "",
+                contactNum: "",
+                relation: ""
+              },
+              healthinfo: {
+                height: "",
+                weight: "",
+                blood_type: "",
+                pre_conditions: "",
+                current_meds:"",
+                allergy: ""
+              }
+      },
+    };
+  },
+  methods: {
+    async handleSubmitForm() {
+      // Checks to see if there are any errors in validation
+      const isFormCorrect = await this.v$.$validate();
+      // If no errors found. isFormCorrect = True then the form is submitted
+      if (isFormCorrect) {
+        let apiURL = "http://localhost:3000/primary/createprimary";
+        axios
+          .post(apiURL, this.client)
+          .then(() => {
+            alert("Client has been succesfully added.");
+            this.$router.push("/createprimary");
+            this.client = {
+              firstName: "",
+              middleName: "",
+              lastName: "",
+              email: "",
+              phoneNumbers: [
+                {
+                  primaryPhone: "",
+                  seondaryPhone: "",
+                },
+              ],
+              address: {
+                line1: "",
+                line2: "",
+                city: "",
+                county: "",
+                zip: "",
+              },
+              emergency_contact: {
+                contactName: "",
+                contactNum: "",
+                relation: ""
+              },
+              healthinfo: {
+                height: "",
+                weight: "",
+                blood_type: "",
+                pre_conditions: "",
+                current_meds:"",
+                allergy: ""
+              }
+            };
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+  },
+  // sets validations for the various data properties
+  validations() {
+    return {
+      client: {
+        firstName: { required, alpha },
+        lastName: { required, alpha },
+        email: { email },
+        address: {
+          city: { required },
+        },
+        phoneNumbers: [
+          {
+            primaryPhone: { required, numeric },
+          },
+        ],
+      },
+    };
+  },
+};
+</script>

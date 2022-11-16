@@ -47,8 +47,8 @@ export default {
   beforeMount() {
     axios
       .get(
-        import.meta.env.VITE_ROOT_API +
-          `/primarydata/id/${this.$route.params.id}`
+        'http://localhost:3000/' +
+          `primary/id/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data[0];
@@ -68,8 +68,9 @@ export default {
       });
     axios
       .get(
-        import.meta.env.VITE_ROOT_API +
-          `/eventdata/client/${this.$route.params.id}`
+        'http://localhost:3000/'
+         +
+          `/event/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data;
@@ -80,7 +81,7 @@ export default {
           });
         });
       });
-    axios.get(import.meta.env.VITE_ROOT_API + `/eventdata`).then((resp) => {
+    axios.get('http://localhost:3000' + `/addAttendee`).then((resp) => {
       let data = resp.data;
       for (let i = 0; i < data.length; i++) {
         this.eventData.push({
@@ -96,7 +97,7 @@ export default {
       return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
     handleClientUpdate() {
-      let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
+      let apiURL = 'http://localhost:3000' + `/primary/${this.id}`;
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
@@ -107,13 +108,13 @@ export default {
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
-          import.meta.env.VITE_ROOT_API + `/eventdata/addAttendee/` + event._id;
+        'http://localhost:3000' + `/event/` + event._id;
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
           this.clientEvents = [];
           axios
             .get(
-              import.meta.env.VITE_ROOT_API +
-                `/eventdata/client/${this.$route.params.id}`
+              'http://localhost:3000' +
+                `/event/client/${this.$route.params.id}`
             )
             .then((resp) => {
               let data = resp.data;

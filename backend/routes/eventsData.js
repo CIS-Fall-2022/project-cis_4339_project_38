@@ -87,6 +87,7 @@ router.get("/client/:id", (req, res, next) => {
 });
 
 //GET the count of attendees of an event
+//Reference: Tutorials
 router.get("/eventAttendees", (req, res, next) => { 
     var checkDate = new Date() 
     

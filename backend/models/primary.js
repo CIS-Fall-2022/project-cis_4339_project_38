@@ -19,7 +19,7 @@ let primaryDataSchema = new Schema({
         type: String
     },
     phoneNumbers: {
-        type: Number,
+        type: Array,
         required: true
     },
     address: {
@@ -45,7 +45,7 @@ let primaryDataSchema = new Schema({
                 type: String
             },
             contactNum: {
-                type: String
+                type: Number
             },
             relation: {
                 type: String

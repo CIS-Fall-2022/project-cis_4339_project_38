@@ -25,6 +25,20 @@ router.post("/createevent", (req, res, next) => {
     );
 });
 
+//GET events for which a client is signed up
+router.get("/primary/:id", (req, res, next) => { 
+    eventdata.find( 
+        { attendees: req.params.attendees }, 
+        (error, data) => { 
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    );
+});
+
 //GET all entries
 router.get("/allevents", (req, res, next) => { 
     eventdata.find( 
@@ -90,7 +104,6 @@ router.get("/client/:id", (req, res, next) => {
 //Reference: Tutorials
 router.get("/eventAttendees", (req, res, next) => { 
     var checkDate = new Date() 
-    
     eventdata.aggregate([
             {$match: {date: {
                 $gt : new Date(checkDate.setMonth(checkDate.getMonth() - 2)),

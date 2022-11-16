@@ -4,7 +4,6 @@ import { required, email, alpha, numeric } from "@vuelidate/validators";
 import VueMultiselect from "vue-multiselect";
 import axios from "axios";
 import { DateTime } from "luxon";
-
 export default {
   props: ["id"],
   components: { VueMultiselect },
@@ -47,8 +46,8 @@ export default {
   beforeMount() {
     axios
       .get(
-        'http://localhost:3000/' +
-          `primary/id/${this.$route.params.id}`
+        import.meta.env.VITE_ROOT_API +
+          `/primarydata/id/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data[0];
@@ -68,9 +67,8 @@ export default {
       });
     axios
       .get(
-        'http://localhost:3000/'
-         +
-          `/event/${this.$route.params.id}`
+        import.meta.env.VITE_ROOT_API +
+          `/eventdata/client/${this.route.params.id}`
       )
       .then((resp) => {
         let data = resp.data;
@@ -81,7 +79,7 @@ export default {
           });
         });
       });
-    axios.get('http://localhost:3000' + `/addAttendee`).then((resp) => {
+    axios.get(import.meta.env.VITE_ROOT_API + `/eventdata`).then((resp) => {
       let data = resp.data;
       for (let i = 0; i < data.length; i++) {
         this.eventData.push({
@@ -97,7 +95,7 @@ export default {
       return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
     handleClientUpdate() {
-      let apiURL = 'http://localhost:3000' + `/primary/${this.id}`;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
@@ -108,13 +106,13 @@ export default {
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
-        'http://localhost:3000' + `/event/` + event._id;
+          import.meta.env.VITE_ROOT_API + `/eventdata/addAttendee/` + event._id;
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
           this.clientEvents = [];
           axios
             .get(
-              'http://localhost:3000' +
-                `/event/client/${this.$route.params.id}`
+              import.meta.env.VITE_ROOT_API +
+                `/eventdata/client/${this.$route.params.id}`
             )
             .then((resp) => {
               let data = resp.data;

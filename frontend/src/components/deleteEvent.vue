@@ -1,7 +1,7 @@
 <template>
     <main>
       <div>
-        <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Create New Event</h1>
+        <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Delete An Event</h1>
       </div>
       <div class="px-10 py-20">
         <!-- @submit.prevent stops the submit event from reloading the page-->

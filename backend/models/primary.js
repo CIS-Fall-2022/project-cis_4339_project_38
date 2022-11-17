@@ -73,7 +73,8 @@ let primaryDataSchema = new Schema({
     },
     orgName: {
         type: String,
-        require: true
+        require: true,
+        default: process.env.ORG_NAME
     }
 }, {
     collection: 'primaryData',

@@ -40,6 +40,8 @@ let eventDataSchema = new Schema({
     },
     orgName: {
         type: String,
+        require: true,
+        default: process.env.ORG_NAME
     }
 }, {
     collection: 'eventData'

@@ -86,19 +86,6 @@ router.get("/search/", (req, res, next) => {
     );
 });
 
-//GET events for which a client is signed up
-router.get("/client/:id", (req, res, next) => { 
-    eventdata.find( 
-        { attendees: req.params.id }, 
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
-        }
-    );
-});
 
 //GET the count of attendees of an event
 //Reference: Tutorials

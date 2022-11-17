@@ -35,6 +35,19 @@ export default {
           county: "",
           zip: "",
         },
+        emergency_contact: {
+                contactName: "",
+                contactNum: "",
+                relation: ""
+              },
+              healthinfo: {
+                height: "",
+                weight: "",
+                blood_type: "",
+                pre_conditions: "",
+                current_meds:"",
+                allergy: ""
+              }
       },
       // list of events shown in table
       clientEvents: [],
@@ -46,8 +59,8 @@ export default {
   beforeMount() {
     axios
       .get(
-        import.meta.env.VITE_ROOT_API +
-          `/primarydata/id/${this.$route.params.id}`
+        'http://localhost:3000'  +
+          `/primary/id/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data[0];
@@ -64,11 +77,21 @@ export default {
         this.client.address.city = data.address.city;
         this.client.address.county = data.address.county;
         this.client.address.zip = data.address.zip;
+        this.client.emergency_contact.contactName = data.emergency_contact.contactName;
+        this.client.emergency_contact.contactNum = data.emergency_contact.contactNum;
+        this.client.emergency_contact.relation = data.emergency_contact.relation;
+        this.client.healthinfo.height = data.healthinfo.height;
+        this.client.healthinfo.weight = data.healthinfo.weight;
+        this.client.healthinfo.blood_type = data.healthinfo.blood_type;
+        this.client.healthinfo.pre_conditions = data.healthinfo.pre_conditions;
+        this.client.healthinfo.current_meds = data.healthinfo.current_meds;
+        this.client.healthinfo.allergy = data.healthinfo.allergy;
+
       });
     axios
       .get(
-        import.meta.env.VITE_ROOT_API +
-          `/eventdata/client/${this.route.params.id}`
+        'http://localhost:3000/'  +
+          `event/primary/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data;
@@ -79,7 +102,7 @@ export default {
           });
         });
       });
-    axios.get(import.meta.env.VITE_ROOT_API + `/eventdata`).then((resp) => {
+    axios.get("http://localhost:3000"  + '/event/allevents').then((resp) => {
       let data = resp.data;
       for (let i = 0; i < data.length; i++) {
         this.eventData.push({
@@ -95,7 +118,7 @@ export default {
       return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
     handleClientUpdate() {
-      let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
+      let apiURL = 'http://localhost:3000'  + `/primary/${this.$route.params.id}`;
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
@@ -106,13 +129,13 @@ export default {
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
-          import.meta.env.VITE_ROOT_API + `/eventdata/addAttendee/` + event._id;
+        'http://localhost:3000'  + '/event/addAttendees/' + (this.id);
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
           this.clientEvents = [];
           axios
             .get(
-              import.meta.env.VITE_ROOT_API +
-                `/eventdata/client/${this.$route.params.id}`
+              'http://localhost:3000'  +
+                `/event/primary/${event}`
             )
             .then((resp) => {
               let data = resp.data;
@@ -321,6 +344,101 @@ export default {
           </div>
           <div></div>
         </div>
+        
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+          <h2 class="text-2xl font-bold">Emergency Contact</h2></div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Contact Name</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.emergency_contact.contactName"
+              />
+            </label>
+          </div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Contact Number</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.emergency_contact.contactNum"
+              />
+            </label>
+          </div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Relation</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.emergency_contact.relation"
+              />
+            </label>
+          </div>
+          <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
+          <h2 class="text-2xl font-bold">Health Information</h2></div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Height</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.healthinfo.height"
+              />
+            </label>
+          </div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Weight</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.healthinfo.weight"
+              />
+            </label>
+          </div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Blood Type</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.healthinfo.blood_type"
+              />
+            </label>
+          </div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Pre-Conditions</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.healthinfo.pre_conditions"
+              />
+            </label>
+          </div>
+          <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Current Medication</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.healthinfo.current_meds"
+              />
+            </label>
+          </div>
+                    <div class="flex flex-col">
+            <label class="block">
+              <span class="text-gray-700">Allergies</span>
+              <input
+                type="text"
+                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                v-model="client.healthinfo.allergy"
+              />
+            </label>
+            </div>
 
         <!-- grid container -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">

@@ -137,7 +137,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
                 if (data.length == 0) {
                     eventdata.updateOne(
                         { _id: req.params.id }, 
-                        { $push: { attendees: req.body.attendee } },
+                        { $push: { attendees: req.body.attendees } },
                         (error, data) => {
                             if (error) {
                                 return next(error);

@@ -1,5 +1,7 @@
 <template>
   <main>
+   <!--Graph and Data -->
+   <!--Reference: Module 10 -->
     <div>
       <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Welcome</h1>
       <h2 class="font-italic text-4xl text-red-700 tracking-widest text-center mt-10">Our Past Events</h2>
@@ -43,18 +45,19 @@
       </div>
     </div>
   </div>
+  <!--Table showing the event names and attendance-->
   <div class="flex flex-col col-span-2">
             <table class="min-w-full shadow-md rounded">
               <thead class="bg-gray-50 text-xl">
                 <tr>
-                  <th class="p-4 text-left">Event Name</th>
-                  <th class="p-4 text-left">Attendance</th>
+                  <th class="p-4 text-left font" style="background-color:darkred"> Name</th>
+                  <th class="p-4 text-left" style="background-color:darkred">Attendance</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-300">
-                  <td class="p-2 text-left">Test</td>
-                  <td class="p-2 text-left">Test</td>
-              </tbody>
+                  <td class="p-2 text-left" style="background-color:crimson">{{this.Event}}</td>
+                  <td class="p-2 text-left" style="background-color:crimson"> {{this.total}}</td>
+              </tbody> 
             </table>
           </div>
   </main>
@@ -71,8 +74,8 @@ EventBar,
 },
 data() {
 return {
-  labels: [],
-  enrolled: [],
+  Event: [],
+  total: [],
   loading: false,
   error: null,
 };

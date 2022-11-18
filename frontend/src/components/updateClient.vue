@@ -90,8 +90,7 @@ export default {
       });
     axios
       .get(
-        'http://localhost:3000/'  +
-          `event/primary/${this.$route.params.id}`
+        `http://localhost:3000/event/primary/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data;
@@ -118,7 +117,7 @@ export default {
       return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
     handleClientUpdate() {
-      let apiURL = 'http://localhost:3000'  + `/primary/${this.$route.params.id}`;
+      let apiURL = 'http://localhost:3000'  + `/primary/` + (this.id);
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
@@ -129,13 +128,13 @@ export default {
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
-        'http://localhost:3000'  + '/event/addAttendees/' + (this.id);
+        `http://localhost:3000/event/AddAttendee/${this.$route.params.id}`;
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
+          alert("Client is now registered for the event!");
           this.clientEvents = [];
           axios
             .get(
-              'http://localhost:3000'  +
-                `/event/primary/${event}`
+              `http://localhost:3000/event/primary/${this.$route.params.id}`
             )
             .then((resp) => {
               let data = resp.data;

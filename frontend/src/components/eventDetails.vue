@@ -247,7 +247,6 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, alpha, numeric } from "@vuelidate/validators";
 import axios from "axios";
 import { DateTime } from "luxon";
-
 export default {
   props: ["id"],
   setup() {
@@ -276,7 +275,7 @@ export default {
   beforeMount() {
     axios
       .get(
-        'http://localhost:3000/' + `event/id/${this.$route.params.id}`
+        import.meta.env.VITE_ROOT_API + `/event/id/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data[0];
@@ -290,8 +289,8 @@ export default {
         for (let i = 0; i < this.attendeeIDs.length; i++) {
           axios
             .get(
-              'http://localhost:3000/' +
-                `primary/id${this.attendeeIDs[i]}`
+              import.meta.env.VITE_ROOT_API +
+                `/primary/id/${this.attendeeIDs[i]}`
             )
             .then((resp) => {
               let data = resp.data[0];
@@ -312,7 +311,7 @@ export default {
     },
     handleEventUpdate() {
       this.event.services = this.checkedServices;
-      let apiURL = 'http://localhost:3000' + `/event/${this.id}`;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
       axios.put(apiURL, this.event).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {

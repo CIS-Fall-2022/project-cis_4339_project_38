@@ -147,7 +147,34 @@ export default {
         });
       });
     },
+    deleteFromEvent() {
+      let apiURL = 'http://localhost:3000'  + `/primary/` + (this.id);
+      axios.put(apiURL, this.client).then(() => {
+        alert("Update has been saved.");
+        this.$router.back().catch((error) => {
+          console.log(error);
+        });
+      });
+    },
+    deleteClient() {
+      let apiURL = 'http://localhost:3000' + '/primary/primary/' + (this.id);
+          axios
+            .delete(apiURL, this.client)
+            .then(() => {
+              alert("Client has been succesfully deleted.");
+              this.$router.push("/primary/:id");
+              this.client = {
+                firstName: "",
+                lastName: "",
+              };
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+    }
   },
+
   validations() {
     return {
       client: {
@@ -450,6 +477,13 @@ export default {
           </div>
           <div class="flex justify-between mt-10 mr-20">
             <button
+              @click="deleteClient"
+              type="submit"
+              class="bg-red-700 text-white rounded"
+            >Delete Client</button>
+          </div>
+          <div class="flex justify-between mt-10 mr-20">
+            <button
               type="reset"
               class="border border-red-700 bg-white text-red-700 rounded"
               @click="$router.go(-1)"
@@ -475,6 +509,13 @@ export default {
                 <tr v-for="event in clientEvents" :key="event._id">
                   <td class="p-2 text-left">{{ event.eventName }}</td>
                   <td class="p-2 text-left">{{ formattedDate(event.eventDate) }}</td>
+                  <div class="flex justify-between">
+                <button
+                @click="deleteFromEvent"
+                type="submit"
+                class="mt-3 bg-red-700 text-white rounded"
+              >Delete Client to Events</button>
+            </div>
                 </tr>
               </tbody>
             </table>

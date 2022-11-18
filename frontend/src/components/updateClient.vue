@@ -59,7 +59,7 @@ export default {
   beforeMount() {
     axios
       .get(
-        'http://localhost:3000'  +
+        import.meta.env.VITE_ROOT_API +
           `/primary/id/${this.$route.params.id}`
       )
       .then((resp) => {
@@ -86,11 +86,11 @@ export default {
         this.client.healthinfo.pre_conditions = data.healthinfo.pre_conditions;
         this.client.healthinfo.current_meds = data.healthinfo.current_meds;
         this.client.healthinfo.allergy = data.healthinfo.allergy;
-
       });
     axios
       .get(
-        `http://localhost:3000/event/primary/${this.$route.params.id}`
+        import.meta.env.VITE_ROOT_API +
+          `/event/client/${this.$route.params.id}`
       )
       .then((resp) => {
         let data = resp.data;
@@ -128,13 +128,13 @@ export default {
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
-        `http://localhost:3000/event/AddAttendee/${this.$route.params.id}`;
+        `http://localhost:3000/event/AddAttendee/` + event._id;
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
           alert("Client is now registered for the event!");
           this.clientEvents = [];
           axios
             .get(
-              `http://localhost:3000/event/primary/${this.$route.params.id}`
+              `http://localhost:3000/event/client/` + event._id
             )
             .then((resp) => {
               let data = resp.data;

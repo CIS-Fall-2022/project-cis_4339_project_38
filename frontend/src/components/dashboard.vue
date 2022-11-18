@@ -52,10 +52,8 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-300">
-                <tr v-for="event in clientEvents" :key="event._id">
-                  <td class="p-2 text-left">{{ url.event.eventName }}</td>
-                  <td class="p-2 text-left">{{ url.event.Attendance }}</td>
-                </tr>
+                  <td class="p-2 text-left">Test</td>
+                  <td class="p-2 text-left">Test</td>
               </tbody>
             </table>
           </div>

@@ -25,19 +25,6 @@ router.post("/createevent", (req, res, next) => {
     );
 });
 
-//GET events for which a client is signed up
-router.get("/primary/:id", (req, res, next) => { 
-    eventdata.find( 
-        { attendees: req.params.attendees }, 
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
-        }
-    );
-});
 
 //GET all entries
 router.get("/allevents", (req, res, next) => { 
@@ -87,6 +74,7 @@ router.get("/search/", (req, res, next) => {
 });
 
 
+
 //GET the count of attendees of an event
 //Reference: Tutorials
 router.get("/eventAttendees", (req, res, next) => { 
@@ -108,8 +96,21 @@ router.get("/eventAttendees", (req, res, next) => {
         )
 });
 
+//GET events for which a client is signed up
+router.get("/client/:id", (req, res, next) => { 
+    eventdata.find( 
+        { attendees: req.params.id }, 
+        (error, data) => { 
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    );
+});
 
-//PUT
+//PUT Update and Event
 router.put("/:id", (req, res, next) => {
     eventdata.findOneAndUpdate(
         { _id: req.params.id },
@@ -137,9 +138,10 @@ router.put("/addAttendee/:id", (req, res, next) => {
                 if (data.length == 0) {
                     eventdata.updateOne(
                         { _id: req.params.id }, 
-                        { $push: { attendees: req.body.attendees } },
+                        { $push: { attendees: req.body.attendee } },
                         (error, data) => {
                             if (error) {
+                                consol
                                 return next(error);
                             } else {
                                 res.json(data);
@@ -150,7 +152,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
                 else if (data.length == 1){
                     res.send("Attendee has already been added. Please add a new person!")
                     Promise.reject("I think a new person is trying to RSVP for the event!").then(null, function(err) { console.log(err); });
-            }  
+                     }  
             }
         }
     );
@@ -172,17 +174,32 @@ router.delete('/event/:id', (req, res, next) => {
 });
 
 //DELETE Delete Attendee from Event
-router.delete('/event/:id', (req, res, next) => {
-    eventdata.findOneAndRemove({ attendee: req.params.attendees}, (error,data) => {
-        if (error) {
-            return next(error);
-        } else {
-            res.status(200).json({
-                msg: data
-            });
+router.delete('/deleteClient/:id', (req, res, next) => {
+    //only add attendee if not yet signed uo
+    eventdata.find( 
+        { _id: req.params.id, attendees: req.body.attendee }, 
+        (error, data) => { 
+            if (error) {
+                return next(error);
+            } else {
+                if (data.length == 0) {
+                    eventdata.findOneAndRemove(
+                        { _id: req.params.id }, 
+                        { $push: { attendees: req.body.attendee } },
+                        (error, data) => {
+                            if (error) {
+                                consol
+                                return next(error);
+                            } else {
+                                res.json(data);
+                            }
+                        }
+                    );
+                }
                 
-        }    
-
-    });
+            }
+        }
+    );
+    
 });
 module.exports = router;

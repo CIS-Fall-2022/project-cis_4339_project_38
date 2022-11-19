@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 let primarydata  = require("../models/primary.js"); 
 let { eventdata } = require("../models/event.js"); 
 let { orgdata } = require("../models/org.js");
+const { ObjectId } = require('mongodb');
 
 //POST
 router.post("/createprimary", (req, res, next) => { 
@@ -98,8 +99,8 @@ router.put("/:id", (req, res, next) => {
 });
 
 router.delete('/primary/:id', (req, res, next) => {
-    //mongoose will use primaryID of document
-    primarydata.findOneAndDelete({ id: req.params.id }, (error, data) => {
+    //mongoose will use studentID of document
+    primarydata.findOneAndRemove({ eventID: req.params.id}, (error, data) => {
         if (error) {
           return next(error);
         } else {
@@ -110,5 +111,4 @@ router.delete('/primary/:id', (req, res, next) => {
         }
       });
 });
-
 module.exports = router;

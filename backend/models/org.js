@@ -18,23 +18,6 @@ let orgDataSchema = new Schema({
             type: String
         }] 
     },
-    org_address: {
-        line1: {
-            type: String
-        },
-        line2: {
-            type: String
-        },
-        city: {
-            type: String
-        },
-        country: {
-            type: String
-        },
-        zip: {
-            type: String
-        }
-    }
 }, {
     collection: 'orgData'
 });

@@ -159,7 +159,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
     
 });
 //DELETE Delete Event
-router.delete('/event/:id', (req, res, next) => {
+router.delete('/deleteEvent/:id', (req, res, next) => {
     //mongoose will use studentID of document
     eventdata.findOneAndRemove({ eventID: req.params.id}, (error, data) => {
         if (error) {
@@ -168,7 +168,7 @@ router.delete('/event/:id', (req, res, next) => {
            res.status(200).json({
              msg: data
            });
-//          res.send('Event has been deleted');
+          res.send('This event has been deleted!');
         }
       });
 });

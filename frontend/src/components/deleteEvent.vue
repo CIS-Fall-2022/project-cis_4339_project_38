@@ -60,7 +60,7 @@
         // If no errors found. isFormCorrect = True then the form is submitted
         if (isFormCorrect) {
           this.event.services = this.checkedServices;
-          let apiURL = 'http://localhost:3000/' + 'event/event/' + (this.id);
+          let apiURL = import.meta.env.VITE_ROOT_API + 'event/deleteEvent/' + (this.id);
           axios
             .delete(apiURL, this.event)
             .then(() => {

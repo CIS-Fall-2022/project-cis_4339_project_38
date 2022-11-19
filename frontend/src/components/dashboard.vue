@@ -85,7 +85,7 @@ return {
   try {
     this.error = null;
     this.loading = true;
-    const url = `http://localhost:3000/event/eventAttendees`;
+    const url = import.meta.env.VITE_ROOT_API + `/event/eventAttendees`;
     const response = await axios.get(url);
     //"re-organizing" - mapping json from the response
     this.Event = response.data.map((item) => item._id);

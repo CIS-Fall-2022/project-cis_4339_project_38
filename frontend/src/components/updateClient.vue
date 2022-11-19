@@ -101,7 +101,7 @@ export default {
           });
         });
       });
-    axios.get("http://localhost:3000"  + '/event/allevents').then((resp) => {
+    axios.get(import.meta.env.VITE_ROOT_API  + '/event/allevents').then((resp) => {
       let data = resp.data;
       for (let i = 0; i < data.length; i++) {
         this.eventData.push({
@@ -117,7 +117,7 @@ export default {
       return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
     handleClientUpdate() {
-      let apiURL = 'http://localhost:3000'  + `/primary/` + (this.id);
+      let apiURL = import.meta.env.VITE_ROOT_API  + `/primary/` + (this.id);
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
@@ -128,13 +128,13 @@ export default {
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
-        `http://localhost:3000/event/AddAttendee/` + event._id;
+        import.meta.env.VITE_ROOT_API + `/event/AddAttendee/` + event._id;
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
           alert("Client is now registered for the event!");
           this.clientEvents = [];
           axios
             .get(
-              `http://localhost:3000/event/client/` + event._id
+              import.meta.env.VITE_ROOT_API + `/event/client/` + event._id
             )
             .then((resp) => {
               let data = resp.data;
@@ -148,31 +148,36 @@ export default {
       });
     },
     deleteFromEvent() {
-      let apiURL = 'http://localhost:3000'  + `/primary/` + (this.id);
-      axios.put(apiURL, this.client).then(() => {
-        alert("Update has been saved.");
+      this.eventsChosen.forEach((event) => {
+        let apiURL =
+        import.meta.env.VITE_ROOT_API + `/event/deleteClient/` + event._id;
+        axios.delete(apiURL, { attendee: this.$route.params.id }).then(() => {
+          alert("Client is no longer registered for this event!");
+          this.clientEvents = [];
+          axios
+            .get(
+              import.meta.env.VITE_ROOT_API + `/event/client/` + event._id
+            )
+            .then((resp) => {
+              let data = resp.data;
+              for (let i = 0; i < data.length; i++) {
+                this.clientEvents.push({
+                  eventName: data[i].eventName,
+                });
+              }
+            });
+        });
+      });
+    },
+    deleteClient() {
+      let apiURL = import.meta.env.VITE_ROOT_API  + `/primary/deleteprimary/${this.$route.params.id}`;
+      axios.delete(apiURL, this.client).then(() => {
+        alert("Client has been deleted.");
         this.$router.back().catch((error) => {
           console.log(error);
         });
       });
     },
-    deleteClient() {
-      let apiURL = 'http://localhost:3000' + '/primary/primary/' + (this.id);
-          axios
-            .delete(apiURL, this.client)
-            .then(() => {
-              alert("Client has been succesfully deleted.");
-              this.$router.push("/primary/:id");
-              this.client = {
-                firstName: "",
-                lastName: "",
-              };
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-
-    }
   },
 
   validations() {
@@ -513,8 +518,8 @@ export default {
                 <button
                 @click="deleteFromEvent"
                 type="submit"
-                class="mt-3 bg-red-700 text-white rounded"
-              >Delete Client to Events</button>
+                class="mt-5 bg-red-700 text-white rounded"
+              >Delete Client from Events</button>
             </div>
                 </tr>
               </tbody>

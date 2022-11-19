@@ -38,12 +38,6 @@
               </router-link>
             </li>
             <li>
-              <router-link to="/deleteClient">
-                <span style="position: relative; top: 6px" class="material-icons">Delete</span>
-                Delete Client
-              </router-link>
-            </li>
-            <li>
               <router-link to="/deleteEvent">
                 <span style="position: relative; top: 6px" class="material-icons">Delete</span>
                 Delete Event

@@ -41,11 +41,6 @@ const routes = [
         component: () => import('../components/eventDetails.vue')
     },
     {
-        path: '/deleteClient',
-        name: 'deleteClient',
-        component: () => import('../components/deleteClient.vue')
-    },
-    {
         path: '/deleteEvent',
         name: 'deleteEvent',
         component: () => import('../components/deleteEvent.vue')

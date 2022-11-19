@@ -161,7 +161,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
 //DELETE Delete Event
 router.delete('/deleteEvent/:id', (req, res, next) => {
     //mongoose will use studentID of document
-    eventdata.findOneAndRemove({ eventID: req.params.id}, (error, data) => {
+    data.findOneAndRemove({ eventID: req.params.id}, (error, data) => {
         if (error) {
           return next(error);
         } else {

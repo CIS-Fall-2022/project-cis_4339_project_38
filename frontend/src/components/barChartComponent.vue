@@ -33,7 +33,7 @@
           scales: {
               y: {
                   min: 0,
-                  max: 40
+                  max: 10
               }
           }
         }

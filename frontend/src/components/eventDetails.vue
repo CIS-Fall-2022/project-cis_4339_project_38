@@ -224,9 +224,9 @@
             <table class="min-w-full shadow-md rounded">
               <thead class="bg-gray-50 text-xl">
                 <tr>
-                  <th class="p-4 text-left">Name</th>
-                  <th class="p-4 text-left">City</th>
-                  <th class="p-4 text-left">Phone Number</th>
+                  <th class="p-4 text-left" style="background-color:red">Name</th>
+                  <th class="p-4 text-left" style="background-color:red">City</th>
+                  <th class="p-4 text-left" style="background-color:red">Phone Number</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-300">
@@ -236,10 +236,10 @@
                   :key="client._id"
                 >
                   <td
-                    class="p-2 text-left"
+                    class="p-2 text-left" style="background-color:lightpink"
                   >{{ client.attendeeFirstName + " " + client.attendeeLastName }}</td>
-                  <td class="p-2 text-left">{{ client.attendeeCity }}</td>
-                  <td class="p-2 text-left">{{ client.attendeePhoneNumber }}</td>
+                  <td class="p-2 text-left" style="background-color:lightpink">{{ client.attendeeCity }}</td>
+                  <td class="p-2 text-left" style="background-color:lightpink">{{ client.attendeePhoneNumber }}</td>
                 </tr>
               </tbody>
             </table>

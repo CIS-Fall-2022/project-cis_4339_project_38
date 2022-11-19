@@ -103,7 +103,6 @@ export default {
       });
     axios.get(import.meta.env.VITE_ROOT_API  + '/event/allevents').then((resp) => {
       let data = resp.data;
-      if (err) throw "Update couldn't be made at this time! Please try again";
       for (let i = 0; i < data.length; i++) {
         this.eventData.push({
           eventName: data[i].eventName,
@@ -122,36 +121,37 @@ export default {
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
-          console.log(error).then(alert("Cannot update! Please make corrections!"));
+          console.log(error);
         });
       });
     },
     addToEvent() {
       this.eventsChosen.forEach((event) => {
-        if (err) throw error;
         let apiURL =
         import.meta.env.VITE_ROOT_API + `/event/AddAttendee/` + event._id;
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
-          alert("Client is now registered for the event!");
           this.clientEvents = [];
           axios
             .get(
               import.meta.env.VITE_ROOT_API + `/event/client/` + event._id
             )
             .then((resp) => {
-              let data = resp.data;
-              for (let i = 0; i < data.length; i++) {
-                this.clientEvents.push({
-                  eventName: data[i].eventName,
-                });
-                }
-            })
-            this.$router.back().catch((error) => {
-                console.log(error).then(alert("This client cannot be added at this time! Please make corrections or try again later!"));
-        });
-        });
+          if(this.clientEvents.length = 1){
+              alert("Client is already registered")
+          } else {
+            let data = resp.data;
+            for (let i = 0; i < data.length; i++) {                 
+              this.clientEvents.push({
+                eventName: data[i].eventName,                          
+              });
+              alert("Client is now registered for the event!")
+            }
+          }
+        }
+      );
       });
-    },
+    });
+  },
     deleteFromEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
@@ -494,14 +494,14 @@ export default {
             <table class="min-w-full shadow-md rounded">
               <thead class="bg-gray-50 text-xl">
                 <tr>
-                  <th class="p-4 text-left">Event Name</th>
-                  <th class="p-4 text-left">Date</th>
+                  <th class="p-4 text-left" style="background-color:red">Event Name</th>
+                  <th class="p-4 text-left" style="background-color:red">Date</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-300">
                 <tr v-for="event in clientEvents" :key="event._id">
-                  <td class="p-2 text-left">{{ event.eventName }}</td>
-                  <td class="p-2 text-left">{{ formattedDate(event.eventDate) }}</td>
+                  <td class="p-2 text-left" style="background-color:lightpink">{{ event.eventName }}</td>
+                  <td class="p-2 text-left" style="background-color:lightpink">{{ formattedDate(event.eventDate) }}</td>
                   <div class="flex justify-between">
                 <button
                 @click="deleteFromEvent"

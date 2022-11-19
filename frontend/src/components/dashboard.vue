@@ -55,8 +55,10 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-300">
-                  <td class="p-2 text-left" style="background-color:crimson">{{this.Event}}</td>
-                  <td class="p-2 text-left" style="background-color:crimson"> {{this.total}}</td>
+                <tr v-for="event in eventTableData">
+                  <td class="p-2 text-left" style="background-color:crimson">{{event._id}}</td>
+                  <td class="p-2 text-left" style="background-color:crimson"> {{event.total}}</td>
+                </tr>
               </tbody> 
             </table>
           </div>
@@ -90,6 +92,7 @@ return {
     //"re-organizing" - mapping json from the response
     this.Event = response.data.map((item) => item._id);
     this.total = response.data.map((item) => item.total);
+    this.eventTableData = response.data;
   } catch (err) {
     if (err.response) {
       // client received an error response (5xx, 4xx)

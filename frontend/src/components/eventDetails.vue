@@ -322,7 +322,7 @@ export default {
       axios.put(apiURL, this.event).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
-          console.log(error);
+          console.log(error).then(alert("Update cannot be made! Please make corrections or try again later!"));
         });
       });
     },
@@ -335,7 +335,7 @@ export default {
       axios.delete(apiURL, this.event).then(() => {
         alert("Event has been deleted.");
         this.$router.back().catch((error) => {
-          console.log(error);
+          console.log(error).then(alert("The delete cannot be made! Please try again later or make corrections!"));
         });
       });
 

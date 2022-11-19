@@ -250,7 +250,7 @@ export default {
             this.checkedServices = [];
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error).then(alert("This event cannot be added! Please make corrections or try again at later time."));
           });
       }
     },

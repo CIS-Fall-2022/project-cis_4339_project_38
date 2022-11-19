@@ -98,7 +98,7 @@
               };
             })
             .catch((error) => {
-              console.log(error);
+              console.log(error).then(alert("Delete cannot be made! Please try again later"));
             });
         }
       },

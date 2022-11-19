@@ -40,7 +40,7 @@ router.get("/allprimaries", (req, res, next) => {
 
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => {
-    primarydata.find( 
+    console.log(primarydata.find( 
         { _id: req.params.id }, 
         (error, data) => {
             if (error) {
@@ -49,7 +49,7 @@ router.get("/id/:id", (req, res, next) => {
                 res.json(data);
             }
         }
-    );
+    ));
 });
 
 //GET entries based on search query
@@ -100,7 +100,8 @@ router.put("/:id", (req, res, next) => {
 
 router.delete('/primary/:id', (req, res, next) => {
     //mongoose will use studentID of document
-    primarydata.findOneAndRemove({ eventID: req.params.id}, (error, data) => {
+    console.log(primarydata.findOneAndRemove({ eventID: req.params._id}, (error, data) => {
+        
         if (error) {
           return next(error);
         } else {
@@ -109,6 +110,6 @@ router.delete('/primary/:id', (req, res, next) => {
            });
           res.send('This client has been deleted!');
         }
-      });
+      }));
 });
 module.exports = router;

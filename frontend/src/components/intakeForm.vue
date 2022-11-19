@@ -380,8 +380,7 @@ export default {
             };
           })
           .catch((error) => {
-              console.log(error);
-              alert("Client could not be added at this time, please try again!")
+              console.log(error).then(alert("This client cannot be added at this time! Please make corrections or try again"));
           });
       }
     },

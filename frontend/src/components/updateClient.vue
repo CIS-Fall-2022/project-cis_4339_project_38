@@ -103,6 +103,7 @@ export default {
       });
     axios.get(import.meta.env.VITE_ROOT_API  + '/event/allevents').then((resp) => {
       let data = resp.data;
+      if (err) throw "Update couldn't be made at this time! Please try again";
       for (let i = 0; i < data.length; i++) {
         this.eventData.push({
           eventName: data[i].eventName,
@@ -121,12 +122,13 @@ export default {
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
-          console.log(error);
+          console.log(error).then(alert("Cannot update! Please make corrections!"));
         });
       });
     },
     addToEvent() {
       this.eventsChosen.forEach((event) => {
+        if (err) throw error;
         let apiURL =
         import.meta.env.VITE_ROOT_API + `/event/AddAttendee/` + event._id;
         axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
@@ -142,8 +144,11 @@ export default {
                 this.clientEvents.push({
                   eventName: data[i].eventName,
                 });
-              }
-            });
+                }
+            })
+            this.$router.back().catch((error) => {
+                console.log(error).then(alert("This client cannot be added at this time! Please make corrections or try again later!"));
+        });
         });
       });
     },

@@ -228,7 +228,7 @@ export default {
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
         this.event.services = this.checkedServices;
-        let apiURL = "http://localhost:3000/event/createevent";
+        let apiURL = import.meta.env.VITE_ROOT_API + `/event/createevent`;
         axios
           .post(apiURL, this.event)
           .then(() => {

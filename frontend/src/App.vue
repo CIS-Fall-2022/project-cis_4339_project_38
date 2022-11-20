@@ -85,7 +85,7 @@ methods: {
       try {
         this.error = null;
         this.loading = true;
-        const url = `http://localhost:3000/org/getorg`;
+        const url = import.meta.env.VITE_ROOT_API + `/org/getorg`;
         const response = await axios.get(url);
         //"re-organizing" - mapping json from the response
         this.organization = response.data;

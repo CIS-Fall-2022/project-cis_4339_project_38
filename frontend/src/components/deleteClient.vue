@@ -86,7 +86,7 @@
         const isFormCorrect = await this.v$.$validate();
         // If no errors found. isFormCorrect = True then the form is submitted
         if (isFormCorrect) {
-          let apiURL = 'http://localhost:3000' + '/primary/primary/' + (this.id);
+          let apiURL = import.meta.env.VITE_ROOT_API + '/primary/primary/' + (this.id);
           axios
             .delete(apiURL, this.client)
             .then(() => {

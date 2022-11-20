@@ -340,7 +340,7 @@ export default {
       const isFormCorrect = await this.v$.$validate();
       // If no errors found. isFormCorrect = True then the form is submitted
       if (isFormCorrect) {
-        let apiURL = "http://localhost:3000/primary/createprimary";
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primary/createprimary`;
         axios
           .post(apiURL, this.client)
           .then(() => {

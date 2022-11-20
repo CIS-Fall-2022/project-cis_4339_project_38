@@ -60,7 +60,7 @@
           background: linear-gradient(250deg, #C8102E 70%, #efecec 50.6%);
         "
       >
-        <h1 class="mr-20 text-3xl text-white"></h1>
+        <h1 class="mr-20 text-3xl text-white">{{organization}}</h1>
       </section>
       <div>
         <router-view></router-view>
@@ -70,13 +70,48 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "App",
+  data(){
+  return {
+    error: null,
+    loading: true,
+    organization: [],
+  };
+},
+methods: {
+    async fetchData() {
+      try {
+        this.error = null;
+        this.loading = true;
+        const url = `http://localhost:3000/org/getorg`;
+        const response = await axios.get(url);
+        //"re-organizing" - mapping json from the response
+        this.organization = response.data;
+      } catch (err) {
+        if (err.response) {
+          // client received an error response (5xx, 4xx)
+          this.error = {
+            title: "No Organization Found",
+            message: err.message,
+          };
+        } 
+      }
+    },
+  },
+    mounted() {
+    this.fetchData();
+
+  },
+  routePush(routeName) {
+      this.$router.push({ name: routeName });
+  }
 };
 </script>
 
 <style>
-#_container {
+#_container { 
   background-color: #c8102e;
   color: white;
   padding: 18px;

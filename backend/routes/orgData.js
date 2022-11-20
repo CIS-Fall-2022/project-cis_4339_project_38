@@ -35,7 +35,7 @@ router.get("/allorgs", (req, res, next) => {
 });
 
 //GET single entry by ID
-router.get("/:id", (req, res, next) => {
+router.get("/org/:id", (req, res, next) => {
     orgData.find( 
         { _id: req.params.id }, 
         (error, data) => {
@@ -48,13 +48,20 @@ router.get("/:id", (req, res, next) => {
     );
 });
 
+//GET Name of Organization
+router.get("/getorg",  (req, res, next)=> {
+    const organization = process.env.organization
+    res.json(organization)
+
+});
+
 
 
 
 
 
 //PUT update (make sure req body doesn't have the id)
-router.put("/:id", (req, res, next) => { 
+router.put("org/:id", (req, res, next) => { 
     orgData.findOneAndUpdate( 
         { _id: req.params.id }, 
         req.body,

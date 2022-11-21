@@ -8,6 +8,9 @@ let primarydata  = require("../models/primary.js");
 let { eventdata } = require("../models/event.js"); 
 let { orgdata } = require("../models/org.js");
 const { ObjectId } = require('mongodb');
+const primary = require("../models/primary.js");
+
+const orgName = process.env.ORGANIZATION
 
 //POST
 router.post("/createprimary", (req, res, next) => { 
@@ -31,9 +34,12 @@ router.get("/allprimaries", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
+            } else if (primarydata.orgName === process.env.ORGANIZATION) {
+                console.log("These clients aren't part of the organization")
             } else {
                 res.json(data);
             }
+
         }
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
@@ -41,7 +47,7 @@ router.get("/allprimaries", (req, res, next) => {
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => {
     console.log(primarydata.find( 
-        { _id: req.params.id }, 
+        { _id: req.params.id, orgName: orgName }, 
         (error, data) => {
             if (error) {
                 return next(error);
@@ -68,7 +74,8 @@ router.get("/search/", (req, res, next) => {
         (error, data) => { 
             if (error) {
                 return next(error);
-            } else {
+            }        
+            else {
                 res.json(data);
             }
         }

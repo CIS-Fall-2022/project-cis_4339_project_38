@@ -35,7 +35,7 @@ router.get("/allorgs", (req, res, next) => {
 });
 
 //GET single entry by ID
-router.get("/org/:id", (req, res, next) => {
+router.get("getorg/:id", (req, res, next) => {
     orgData.find( 
         { _id: req.params.id }, 
         (error, data) => {

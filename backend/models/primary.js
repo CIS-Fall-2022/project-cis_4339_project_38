@@ -16,11 +16,13 @@ let primaryDataSchema = new Schema({
         required: true
     },
     email: {
-        type: String
+        type: String,
+        unique: true
     },
     phoneNumbers: {
         type: Array,
-        required: true
+        required: true,
+        unique: true
     },
     address: {
         line1: {

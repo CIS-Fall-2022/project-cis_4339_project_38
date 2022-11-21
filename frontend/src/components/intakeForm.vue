@@ -344,7 +344,6 @@ export default {
         axios
           .post(apiURL, this.client)
           .then(() => {
-            alert("Client has been succesfully added.");
             this.$router.push("/createprimary");
             this.client = {
               firstName: "",
@@ -380,8 +379,9 @@ export default {
             };
           })
           .catch((error) => {
-              console.log(error).then(alert("This client cannot be added at this time! Please make corrections or try again"));
+              console.log(error).then(alert("Please make sure you have a unique phone number and email, as well as completing all the required fields!"))
           });
+          alert("Client has been succesfully added.");
       }
     },
   },
@@ -391,13 +391,13 @@ export default {
       client: {
         firstName: { required, alpha },
         lastName: { required, alpha },
-        email: { email },
+        email: { email, unique : true },
         address: {
           city: { required },
         },
         phoneNumbers: [
           {
-            primaryPhone: { required, numeric },
+            primaryPhone: { required, numeric, unique: true },
           },
         ],
       },

@@ -57,7 +57,7 @@
               <tbody class="divide-y divide-gray-300">
                 <tr v-for="event in eventTableData">
                   <td class="p-2 text-left" style="background-color:crimson">{{event._id}}</td>
-                  <td class="p-2 text-left" style="background-color:crimson"> {{event.total}}</td>
+                  <td class="p-2 text-left" style="background-color:crimson">{{event.total}}</td>
                 </tr>
               </tbody> 
             </table>

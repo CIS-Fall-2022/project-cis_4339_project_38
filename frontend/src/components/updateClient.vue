@@ -137,14 +137,14 @@ export default {
             )
             .then((resp) => {
           if(this.clientEvents.length = 1){
-              alert("Client is already registered")
+              alert("Client is now registered for this event!")
           } else {
             let data = resp.data;
             for (let i = 0; i < data.length; i++) {                 
               this.clientEvents.push({
                 eventName: data[i].eventName,                          
               });
-              alert("Client is now registered for the event!")
+              alert("Client is already registered!")
             }
           }
         }

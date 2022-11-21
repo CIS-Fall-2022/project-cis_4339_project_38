@@ -34,12 +34,9 @@ router.get("/allprimaries", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
-            } else if (primarydata.orgName === process.env.ORGANIZATION) {
-                console.log("These clients aren't part of the organization")
             } else {
                 res.json(data);
             }
-
         }
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
@@ -47,7 +44,7 @@ router.get("/allprimaries", (req, res, next) => {
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => {
     console.log(primarydata.find( 
-        { _id: req.params.id, orgName: orgName }, 
+        { _id: req.params.id}, 
         (error, data) => {
             if (error) {
                 return next(error);
@@ -90,7 +87,7 @@ router.get("/events/:id", (req, res, next) => {
 
 
 //PUT update (make sure req body doesn't have the id)
-router.put("/:id", (req, res, next) => { 
+router.put("primary/:id", (req, res, next) => { 
     primarydata.findOneAndUpdate( 
         { _id: req.params.id }, 
         req.body,

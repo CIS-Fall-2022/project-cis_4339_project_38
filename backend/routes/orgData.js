@@ -50,8 +50,9 @@ router.get("getorg/:id", (req, res, next) => {
 
 //GET Name of Organization
 router.get("/getorg",  (req, res, next)=> {
-    const organization = process.env.organization
-    res.json(organization)
+    const organization = process.env.organization;
+    res.json(organization);
+    console.log(organization);
 
 });
 
